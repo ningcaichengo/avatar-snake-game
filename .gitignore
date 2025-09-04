@@ -1,0 +1,41 @@
+# IDE和编辑器文件
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 操作系统生成的文件
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# 临时文件
+*.tmp
+*.temp
+*.log
+
+# 依赖目录
+node_modules/
+npm-debug.log*
+
+# 构建输出
+dist/
+build/
+
+# 环境变量文件
+.env
+.env.local
+.env.production
+
+# 缓存目录
+.cache/
+
+# 备份文件
+*.bak
+*.backup

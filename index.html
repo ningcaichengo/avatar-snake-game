@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>阿凡达贪吃蛇</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header组件 -->
+    <header class="game-header">
+        <h1 class="game-title">阿凡达贪吃蛇</h1>
+    </header>
+
+    <!-- StatusBar组件 -->
+    <div class="status-bar">
+        <div class="score">得分: <span id="current-score">0</span></div>
+        <div class="high-score">最高: <span id="high-score">0</span></div>
+        <div class="speed-indicator">速度: <span id="speed-bars">■□□□□</span></div>
+        <button id="pause-btn" class="control-btn">暂停</button>
+    </div>
+
+    <!-- GameBoard组件 -->
+    <div class="game-container">
+        <canvas id="game-canvas" width="800" height="600"></canvas>
+        <div id="game-overlay" class="game-overlay hidden">
+            <div class="overlay-content">
+                <h2 id="overlay-title">游戏结束</h2>
+                <p id="overlay-message">你的得分: 0</p>
+                <p id="overlay-time">坚持时间: 0秒</p>
+                <p id="overlay-high">最高纪录: 0</p>
+                <button id="restart-btn" class="action-btn">重新开始</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TouchArea组件 (移动端) -->
+    <div id="touch-area" class="touch-area mobile-only"></div>
+
+    <!-- ButtonBar组件 (移动端) -->
+    <div class="button-bar mobile-only">
+        <button id="mobile-pause" class="action-btn">暂停</button>
+        <button id="mobile-restart" class="action-btn">重新开始</button>
+    </div>
+
+    <!-- Instructions组件 -->
+    <div class="instructions">
+        <p class="control-hints">
+            <span class="desktop-only">方向键或WASD控制 • 空格暂停 • 回车重新开始</span>
+            <span class="mobile-only">滑动屏幕控制蛇移动</span>
+        </p>
+    </div>
+
+    <!-- GameRules组件 -->
+    <div class="game-rules">
+        <h3 class="rules-title">玩法说明</h3>
+        <div class="rules-content desktop-version">
+            <div class="rule-item">
+                <span class="rule-icon">🎯</span>
+                <span class="rule-text">目标: 控制发光蛇吃能量球，获得高分</span>
+            </div>
+            <div class="rule-item">
+                <span class="rule-icon">🎮</span>
+                <span class="rule-text">操作: 方向键或WASD改变移动方向，蛇会自动前进</span>
+            </div>
+            <div class="rule-item">
+                <span class="rule-icon">⚡</span>
+                <span class="rule-text">规则: 吃能量球+10分，撞墙或撞自己游戏结束</span>
+            </div>
+            <div class="rule-item">
+                <span class="rule-icon">🚀</span>
+                <span class="rule-text">挑战: 蛇越长速度越快，坚持更久获得时间奖励</span>
+            </div>
+        </div>
+        
+        <!-- 移动端折叠版本 -->
+        <div class="rules-content mobile-version">
+            <div class="rule-item">🎯 吃能量球获得高分</div>
+            <div class="rule-item">⚡ 撞墙或撞自己结束</div>
+            <div class="rule-item">🚀 蛇越长速度越快</div>
+            <button class="expand-rules" id="expand-rules-btn">
+                展开详细说明 <span class="expand-icon">▼</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- 分数提示 -->
+    <div id="score-popup" class="score-popup hidden">+10</div>
+
+    <!-- 加载JavaScript -->
+    <script src="game.js"></script>
+</body>
+</html>
