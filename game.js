@@ -44,6 +44,12 @@ class AvatarSnake {
         this.setupEventListeners();
         this.updateUI();
         this.render();
+        
+        // 设置初始按钮状态
+        this.elements.pauseBtn.textContent = '开始';
+        if (this.elements.mobilePauseBtn) {
+            this.elements.mobilePauseBtn.textContent = '开始';
+        }
     }
     
     setupCanvas() {
@@ -115,13 +121,14 @@ class AvatarSnake {
         const touchArea = document.getElementById('touch-area');
         if (!touchArea) return;
         
-        let startX, startY;
+        let startX, startY, hasSwiped = false;
         
         touchArea.addEventListener('touchstart', (e) => {
             e.preventDefault();
             const touch = e.touches[0];
             startX = touch.clientX;
             startY = touch.clientY;
+            hasSwiped = false;
         });
         
         touchArea.addEventListener('touchend', (e) => {
@@ -137,6 +144,7 @@ class AvatarSnake {
             if (Math.abs(deltaX) > Math.abs(deltaY)) {
                 // 水平滑动
                 if (Math.abs(deltaX) > minSwipeDistance) {
+                    hasSwiped = true;
                     if (deltaX > 0) {
                         this.changeDirection(1, 0); // 右
                     } else {
@@ -146,6 +154,7 @@ class AvatarSnake {
             } else {
                 // 垂直滑动
                 if (Math.abs(deltaY) > minSwipeDistance) {
+                    hasSwiped = true;
                     if (deltaY > 0) {
                         this.changeDirection(0, 1); // 下
                     } else {
@@ -154,20 +163,14 @@ class AvatarSnake {
                 }
             }
             
+            // 如果没有滑动，则当作点击处理
+            if (!hasSwiped) {
+                this.togglePause();
+            }
+            
             startX = null;
             startY = null;
-        });
-        
-        // 点击暂停
-        touchArea.addEventListener('click', (e) => {
-            if (this.gameState === 'playing' || this.gameState === 'paused') {
-                // 只有在没有滑动的情况下才暂停
-                setTimeout(() => {
-                    if (this.gameState === 'playing' || this.gameState === 'paused') {
-                        this.togglePause();
-                    }
-                }, 100);
-            }
+            hasSwiped = false;
         });
     }
     
@@ -224,7 +227,9 @@ class AvatarSnake {
         } else if (this.gameState === 'paused') {
             this.gameState = 'playing';
             this.elements.pauseBtn.textContent = '暂停';
-            this.elements.mobilePauseBtn.textContent = '暂停';
+            if (this.elements.mobilePauseBtn) {
+                this.elements.mobilePauseBtn.textContent = '暂停';
+            }
             this.startGameLoop();
         } else if (this.gameState === 'ready') {
             this.startGame();
@@ -235,7 +240,9 @@ class AvatarSnake {
         this.gameState = 'playing';
         this.startTime = Date.now();
         this.elements.pauseBtn.textContent = '暂停';
-        this.elements.mobilePauseBtn.textContent = '暂停';
+        if (this.elements.mobilePauseBtn) {
+            this.elements.mobilePauseBtn.textContent = '暂停';
+        }
         this.startGameLoop();
     }
     
@@ -375,7 +382,9 @@ class AvatarSnake {
         
         // 重置按钮文本
         this.elements.pauseBtn.textContent = '开始';
-        this.elements.mobilePauseBtn.textContent = '开始';
+        if (this.elements.mobilePauseBtn) {
+            this.elements.mobilePauseBtn.textContent = '开始';
+        }
         
         // 清除游戏循环
         if (this.gameLoop) {
